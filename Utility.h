@@ -9,9 +9,10 @@
 
 class Utility {
     public:
-        static bool isMySqlDatabaseConnected(DatabaseData databaseData);
+        static bool isMySqlDatabaseConnected(const DatabaseData &databaseData);
         static bool selectTable(QString const &tableName);
         static bool writeToDatabase(TableData &data, QString const &tableName);
-        static bool deleteRowByUTC(QString &utc, QString const &tableName);
+        static bool deleteRowByUTCandDate(QString &utc, QString &date, QString const &tableName);
+        static QString validateUserInput(TableData &insertData);
 };
 #endif // UTILITY_H

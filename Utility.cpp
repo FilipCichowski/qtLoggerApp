@@ -1,6 +1,6 @@
 #include "Utility.h"
 
-bool Utility::isMySqlDatabaseConnected(DatabaseData databaseData) {
+bool Utility::isMySqlDatabaseConnected(const DatabaseData &databaseData) {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(databaseData.hostName);
     db.setDatabaseName(databaseData.databaseName);
@@ -22,14 +22,42 @@ bool Utility::selectTable(QString const &tableName) {
 bool Utility::writeToDatabase(TableData &data, QString const &tableName) {
     QSqlQuery query;
     query.prepare("INSERT INTO " + tableName +  " (Callsign, Name, Country, UTC, Date, Frequency, QSL) VALUES (\"" + data.call + "\", \"" + data.name + "\", \"" + data.country + "\", \""  + data.utc + "\", \"" + data.date + "\", \"" + data.frequency + "\", \"" + data.qslString + "\")");
+
+//    qDebug() << "INSERT INTO " + tableName +  " (Callsign, Name, Country, UTC, Date, Frequency, QSL) VALUES (\"" + data.call + "\", \"" + data.name + "\", \"" + data.country + "\", \""  + data.utc + "\", \"" + data.date + "\", \"" + data.frequency + "\", \"" + data.qslString + "\")";
+
     return query.exec();
 };
 
-bool Utility::deleteRowByUTC(QString &utc, QString const &tableName) {
+bool Utility::deleteRowByUTCandDate(QString &utc, QString &date, QString const &tableName) {
     QSqlQuery query;
-    query.prepare("DELETE FROM " + tableName + " WHERE UTC=\"" + utc + "\"");
-    qDebug() << "DELETE FROM " + tableName + " WHERE UTC=\"" + utc + "\"";
+    query.prepare("DELETE FROM " + tableName + " WHERE UTC=\"" + utc + "\" AND " + "Date=\"" + date + "\"");
+    //qDebug() << "DELETE FROM " + tableName + " WHERE UTC=\"" + utc + "\" AND " + "Date=\"" + date + "\"";
     return query.exec();
+};
+
+QString Utility::validateUserInput(TableData &insertData) {
+    QString message;
+    bool isNameEmpty, isCallEmpty, isFreqEmpty, isNameTooLong, isCallTooLong, isFreqTooLong;
+    int nameLength, callLength, freqLength;
+    nameLength = insertData.name.length();
+    callLength = insertData.call.length();
+    freqLength = insertData.frequency.length();
+    isNameEmpty = nameLength == 0;
+    isCallEmpty = callLength == 0;
+    isFreqEmpty = freqLength == 0;
+    isNameTooLong = nameLength > 15;
+    isCallTooLong = callLength > 15;
+    isFreqTooLong = freqLength > 15;
+
+    if(isCallEmpty or isNameEmpty or isFreqEmpty) {
+        message += "Please fill the blank fields!\n";
+    }
+
+    if(isNameTooLong or isCallTooLong or isFreqTooLong) {
+        message += "User input's length shouldn't exceed 15 characters.";
+    }
+
+    return message;
 };
 
 

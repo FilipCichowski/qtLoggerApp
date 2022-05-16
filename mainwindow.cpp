@@ -1,9 +1,10 @@
 #include <QSqlQueryModel>
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include <QDesktopServices>
+#include <QMessageBox>
 #include "Data.h"
+#include "./ui_mainwindow.h"
 #include "Utility.h"
-#include "Structures.h"
+#include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,48 +32,62 @@ void MainWindow::updateTableUI() {
     model->setTable(databaseData.tableName);
     model->select();
     ui->tableView->setModel(model);
+    ui->tableView->hideColumn(0); // don't show the ID
     ui->tableView->show();
-    qDebug() << "refreshed";
+//    QTableView *view = new QTableView;
+//    view->setModel(model);
+//    view->hideColumn(0); // don't show the ID
+//    view->show();
+}
 
-//    QSqlQueryModel *model = new QSqlQueryModel();
-//    QSqlQuery query;
-//    query.prepare("select * from " + tableName);
-//    qDebug() << "select * from " + tableName;
-//    qDebug() << databaseData.tableName;
-//    query.exec();
-//    model->setQuery(query);
-//    ui->tableView->setModel(model);
-//    ui->tableView->show();
-//    auto tableModel = new QSqlTableModel();
-//    tableModel->setTable(tableName);
-//    tableModel->select();
-//    ui->tableView->setModel(tableModel);
+void MainWindow::showMessageBox(QString &message) {
+    QMessageBox msgBox;
+    msgBox.setText(message);
+    msgBox.exec();
+}
 
+void MainWindow::clearTextFields() {
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->clear();
+    }
+}
 
+void MainWindow::updateActiveRow() {
+    activeRowIndex = ui->tableView->selectionModel()->currentIndex().row();
+    auto model = ui->tableView->model();
+    activeRow = (TableData) {
+            .call = model->index(activeRowIndex, 0).data().toString(),
+            .name = model->index(activeRowIndex, 1).data().toString(),
+            .country = model->index(activeRowIndex, 2).data().toString(),
+            .utc = model->index(activeRowIndex, 3).data().toString(),
+            .date = model->index(activeRowIndex, 4).data().toString(),
+            .frequency = model->index(activeRowIndex, 5).data().toString(),
+            .qslString = model->index(activeRowIndex, 6).data().toString()
+    };
 }
 
 void MainWindow::on_addEntry_clicked()
 {
-    qDebug() << "clicked" << tableName;
     bool qslState;
-    TableData insertData;
     qslState = ui->qsl->isChecked();
     insertData = (TableData) {
             .call = ui->call->text(),
-            .name = ui->call->text(),
+            .name = ui->name->text(),
             .country = ui->country->currentText(),
             .utc = ui->timeEdit->time().toString(),
             .date = ui->dateEdit->date().toString("yyyy-MM-dd"),
             .frequency = ui->frequency->text(),
             .qslString = (qslState ? "1" : "0")};
 
-    Utility::writeToDatabase(insertData, databaseData.tableName);
+    QString validateMessage = Utility::validateUserInput(insertData);
 
-    //clear every text field
-    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
-        widget->clear();
+    if(validateMessage.length() == 0) {
+        Utility::writeToDatabase(insertData, databaseData.tableName);
+        clearTextFields();
+        updateTableUI();
+    } else {
+        showMessageBox(validateMessage);
     }
-    this->updateTableUI();
 }
 
 void MainWindow::on_editEntry_clicked()
@@ -83,11 +98,18 @@ void MainWindow::on_editEntry_clicked()
 
 void MainWindow::on_deleteEntry_clicked()
 {
-    Utility::deleteRowByUTC(activeRowTime, databaseData.tableName);
-    this->updateTableUI();
+    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+    updateTableUI();
 }
 
 void MainWindow::tableViewClicked() {
-    activeRowIndex = ui->tableView->selectionModel()->currentIndex().row();
-    activeRowTime = ui->tableView->model()->index(activeRowIndex, 3).data().toString();
+   updateActiveRow();
 }
+
+void MainWindow::on_openQRZDatabase_clicked()
+{
+    QString url = "https://www.qrz.com/lookup/" + activeRow.call;
+    qDebug() << url;
+    QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
+}
+

@@ -162,7 +162,7 @@
       </widget>
      </item>
      <item row="0" column="5">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="openQRZDatabase">
        <property name="font">
         <font>
          <family>Ubuntu</family>

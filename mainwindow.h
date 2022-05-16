@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Structures.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,12 +20,21 @@ private slots:
     void on_addEntry_clicked();
     void on_deleteEntry_clicked();
     void tableViewClicked();
+    void on_openQRZDatabase_clicked();
 
 private:
+    int activeRowIndex;
     Ui::MainWindow *ui;
     QString tableName;
+//    QString activeRowTime;
+//    QString activeRowDate;
+//    QString activeRowCall;
+    TableData activeRow;
+    TableData insertData;
     void updateTableUI();
-    int activeRowIndex;
-    QString activeRowTime;
+    void updateActiveRow();
+    void showMessageBox(QString &message);
+    void validateUserInput();
+    void clearTextFields();
 };
 #endif // MAINWINDOW_H
