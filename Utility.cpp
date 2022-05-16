@@ -23,7 +23,7 @@ bool Utility::writeToDatabase(TableData &data, QString const &tableName) {
     QSqlQuery query;
     query.prepare("INSERT INTO " + tableName +  " (Callsign, Name, Country, UTC, Date, Frequency, QSL) VALUES (\"" + data.call + "\", \"" + data.name + "\", \"" + data.country + "\", \""  + data.utc + "\", \"" + data.date + "\", \"" + data.frequency + "\", \"" + data.qslString + "\")");
 
-//    qDebug() << "INSERT INTO " + tableName +  " (Callsign, Name, Country, UTC, Date, Frequency, QSL) VALUES (\"" + data.call + "\", \"" + data.name + "\", \"" + data.country + "\", \""  + data.utc + "\", \"" + data.date + "\", \"" + data.frequency + "\", \"" + data.qslString + "\")";
+    //    qDebug() << "INSERT INTO " + tableName +  " (Callsign, Name, Country, UTC, Date, Frequency, QSL) VALUES (\"" + data.call + "\", \"" + data.name + "\", \"" + data.country + "\", \""  + data.utc + "\", \"" + data.date + "\", \"" + data.frequency + "\", \"" + data.qslString + "\")";
 
     return query.exec();
 };
@@ -35,10 +35,20 @@ bool Utility::deleteRowByUTCandDate(QString &utc, QString &date, QString const &
     return query.exec();
 };
 
+bool Utility::updateRowByID(TableData &data, QString const &tableName) {
+    QSqlQuery query;
+    query.prepare("UPDATE " + tableName + " SET Callsign=\"" + data.call + "\", Name=\"" + data.name + "\", Country=\"" + data.country + "\", UTC=\"" + data.utc + "\", Date=\"" + data.date + "\", Frequency=\"" + data.frequency + "\", QSL=\"" + data.qslString + "\" WHERE ID=\"" + data.id + "\"");
+
+    qDebug() << "UPDATE " + tableName + "SET Callsign=\"" + data.call + "\", Name=\"" + data.name + "\", Country=\"" + data.country + "\", UTC=\"" + data.utc + "\", Date=\"" + data.date + "\", Frequency=\"" + data.frequency + "\", QSL=\"" + data.qslString + "\" WHERE ID=\"" + data.id + "\"";
+
+    return query.exec();
+}
+
 QString Utility::validateUserInput(TableData &insertData) {
     QString message;
     bool isNameEmpty, isCallEmpty, isFreqEmpty, isNameTooLong, isCallTooLong, isFreqTooLong;
     int nameLength, callLength, freqLength;
+    static QRegularExpression re("\\D"); // match anything but digit
     nameLength = insertData.name.length();
     callLength = insertData.call.length();
     freqLength = insertData.frequency.length();
@@ -54,7 +64,11 @@ QString Utility::validateUserInput(TableData &insertData) {
     }
 
     if(isNameTooLong or isCallTooLong or isFreqTooLong) {
-        message += "User input's length shouldn't exceed 15 characters.";
+        message += "User input's length shouldn't exceed 15 characters.\n";
+    }
+
+    if (re.match(insertData.frequency).hasMatch()) {
+        message += "Frequency field should contain only numbers.\n";
     }
 
     return message;

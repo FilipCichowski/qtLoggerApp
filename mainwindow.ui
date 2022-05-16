@@ -23,7 +23,7 @@
       <height>211</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0,0,0,0">
+    <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0,0,0,0,0">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -36,153 +36,21 @@
      <property name="verticalSpacing">
       <number>13</number>
      </property>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>UTC</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="5">
-      <widget class="QComboBox" name="band"/>
-     </item>
-     <item row="2" column="3">
-      <widget class="QTimeEdit" name="timeEdit"/>
-     </item>
-     <item row="4" column="4">
-      <widget class="QLabel" name="label_6">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Band</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QComboBox" name="country"/>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Date</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Country</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="3">
-      <widget class="QLineEdit" name="frequency"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="call"/>
-     </item>
-     <item row="3" column="3">
-      <widget class="QDateEdit" name="dateEdit"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="name"/>
-     </item>
-     <item row="2" column="5">
-      <widget class="QCheckBox" name="qsl">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>QSL?</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Call</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="2">
-      <widget class="QLabel" name="label_5">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Frequency</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QPushButton" name="openQRZDatabase">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-        </font>
-       </property>
-       <property name="text">
-        <string>Find in QRZ</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="deleteEntry">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="addEntry">
        <property name="maximumSize">
         <size>
          <width>100</width>
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+        </font>
+       </property>
        <property name="text">
-        <string>Delete</string>
+        <string>Add new</string>
        </property>
       </widget>
      </item>
@@ -199,21 +67,163 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="addEntry">
+     <item row="0" column="3">
+      <widget class="QPushButton" name="deleteEntry">
        <property name="maximumSize">
         <size>
          <width>100</width>
          <height>16777215</height>
         </size>
        </property>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QLineEdit" name="frequency"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QDateEdit" name="dateEdit"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>UTC</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Country</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Call</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="name"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="country"/>
+     </item>
+     <item row="2" column="3">
+      <widget class="QTimeEdit" name="timeEdit"/>
+     </item>
+     <item row="0" column="6">
+      <widget class="QPushButton" name="openQRZDatabase">
        <property name="font">
         <font>
          <family>Ubuntu</family>
         </font>
        </property>
        <property name="text">
-        <string>Add new</string>
+        <string>Find in QRZ</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="call"/>
+     </item>
+     <item row="4" column="2">
+      <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Frequency</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Date</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>kHz</string>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Band</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="6">
+      <widget class="QComboBox" name="band"/>
+     </item>
+     <item row="2" column="6">
+      <widget class="QCheckBox" name="qsl">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>QSL?</string>
        </property>
       </widget>
      </item>

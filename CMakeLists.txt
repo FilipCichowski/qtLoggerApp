@@ -15,6 +15,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
+
 set(PROJECT_SOURCES
             main.cpp
             mainwindow.cpp
@@ -50,7 +51,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(untitled5 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::Sql)
+target_link_libraries(untitled5 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
 
 set_target_properties(untitled5 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

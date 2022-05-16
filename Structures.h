@@ -4,7 +4,7 @@
 #include <QString>
 
 struct TableData {
-    QString  call, name, country, utc, date, frequency, qslString;
+    QString  id, call, name, country, utc, date, frequency, qslString;
 };
 
 class DatabaseData {
