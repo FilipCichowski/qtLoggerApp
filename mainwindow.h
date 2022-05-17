@@ -31,12 +31,16 @@ private:
     QString tableName;
     TableData activeRow;
     TableData insertData;
-    void updateTable();
-    void updateActiveRow();
     void showMessageBox(QString &message);
+    void updateTableView();
+    void updateActiveRow();
+    void openQrz();
+    void addEntry();
     void validateUserInput();
     void clearTextFields();
     void updateDateTime();
     void initWidgets();
+    void keyPressEvent(QKeyEvent *e);
+
 };
 #endif // MAINWINDOW_H

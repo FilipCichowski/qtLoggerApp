@@ -5,9 +5,7 @@
 #include <Structures.h>
 
 extern const QStringList countryList;
-
 extern const QStringList bands;
-
 extern const QString tableName;
 extern const QString hostName;
 extern const QString userName;

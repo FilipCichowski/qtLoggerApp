@@ -2,6 +2,7 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QKeyEvent>
 #include "Data.h"
 #include "./ui_mainwindow.h"
 #include "Utility.h"
@@ -17,23 +18,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     initWidgets();
     Utility::selectTable(tableName);
-    updateTable();
+    updateTableView();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
 void MainWindow::initWidgets() {
     ui->country->addItems(countryList);
-    ui->band->addItems(bands);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->timeEdit->setDisplayFormat("hh:mm:ss");
     updateDateTime();
 }
 
-void MainWindow::updateTable() {
+void MainWindow::updateTableView() {
     QSqlTableModel *model = new QSqlTableModel;
     model->setTable(databaseData.tableName);
     model->select();
@@ -67,7 +66,6 @@ void MainWindow::updateActiveRow() {
             .frequency = model->index(activeRowIndex, 6).data().toString(),
             .qslString = model->index(activeRowIndex, 7).data().toString()
     };
-    qDebug() << model->index(activeRowIndex, 0).data().toString();
 }
 
 void MainWindow::updateDateTime() {
@@ -76,8 +74,64 @@ void MainWindow::updateDateTime() {
     ui->dateEdit->setDate(DateTime.date());
 }
 
-void MainWindow::on_addEntry_clicked()
-{
+void MainWindow::on_addEntry_clicked() {
+   addEntry();
+}
+
+void MainWindow::on_editEntry_clicked() {
+    Utility::updateRowByID(activeRow, databaseData.tableName);
+    updateTableView();
+}
+
+void MainWindow::on_deleteEntry_clicked() {
+    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+    updateTableView();
+}
+
+void MainWindow::tableViewClicked() {
+   updateActiveRow();
+}
+
+void MainWindow::on_openQRZDatabase_clicked() {
+    openQrz();
+}
+
+void MainWindow::timerEvent(QTimerEvent *event) {
+    updateDateTime();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* f_event) {
+    if(f_event->type() == QEvent::KeyPress)
+        {
+            if( f_event->modifiers().testFlag(Qt::ControlModifier) )
+            {
+                switch(f_event->key())
+                {
+                    case Qt::Key_S:
+                        addEntry();
+                        break;
+                    case Qt::Key_E:
+                        Utility::updateRowByID(activeRow, databaseData.tableName);
+                        updateTableView();
+                        break;
+                    case Qt::Key_D:
+                    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+                    updateTableView();
+                        break;
+                    case Qt::Key_F:
+                        openQrz();
+                        break;
+                }
+            }
+        }
+}
+
+void MainWindow::openQrz() {
+    QString url = "https://www.qrz.com/lookup/" + activeRow.call;
+    QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
+}
+
+void MainWindow::addEntry() {
     bool qslState;
     qslState = ui->qsl->isChecked();
     insertData = (TableData) {
@@ -94,36 +148,11 @@ void MainWindow::on_addEntry_clicked()
     if(validateMessage.length() == 0) {
         Utility::writeToDatabase(insertData, databaseData.tableName);
         clearTextFields();
-        updateTable();
+        updateTableView();
     } else {
         showMessageBox(validateMessage);
     }
 }
 
-void MainWindow::on_editEntry_clicked()
-{
-    Utility::updateRowByID(activeRow, databaseData.tableName);
-}
 
-
-void MainWindow::on_deleteEntry_clicked()
-{
-    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
-    updateTable();
-}
-
-void MainWindow::tableViewClicked() {
-   updateActiveRow();
-}
-
-void MainWindow::on_openQRZDatabase_clicked()
-{
-    QString url = "https://www.qrz.com/lookup/" + activeRow.call;
-    qDebug() << url;
-    QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
-}
-
-void MainWindow::timerEvent(QTimerEvent *event) {
-    updateDateTime();
-}
 

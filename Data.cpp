@@ -252,23 +252,6 @@ extern const QStringList countryList = {
     "Åland Islands"
 };
 
-extern const QStringList bands = {
-    "160m",
-    "80m",
-    "60m",
-    "40m",
-    "30m",
-    "20m",
-    "17m",
-    "15m",
-    "12m",
-    "10m",
-    "6m",
-    "4m",
-    "2m",
-    "70cm"
-};
-
 extern const DatabaseData databaseData("qso", "qso", "127.0.0.1", "root", "mynewpassword");
 
 
