@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QKeyEvent>
+#include <QFileDialog>
 #include "Data.h"
 #include "./ui_mainwindow.h"
 #include "Utility.h"
@@ -86,6 +87,39 @@ void MainWindow::on_editEntry_clicked() {
 void MainWindow::on_deleteEntry_clicked() {
     Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
     updateTableView();
+}
+
+void MainWindow::on_exportEntry_clicked() {
+    QSqlTableModel *model = new QSqlTableModel;
+    model->setTable(databaseData.tableName);
+    model->select();
+
+    QString CSVString = "Id, Call sign, Name, Country, UTC, Date, Frequency, QSL\n";
+
+    for (int i = 0; i < model->rowCount(); i++) {
+        for (int j = 0; j < model->columnCount(); j++) {
+            CSVString += model->data(model->index(i,j)).toString();
+            if (j != model->columnCount() - 1) CSVString += ",";
+        }
+        CSVString += "\n";
+    }
+
+    QString message;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save file"), "C://", tr("CSV (*.csv)"));
+    QFile file(fileName);
+
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream(&file);
+        stream << CSVString;
+        file.close();
+
+        message = "CSV file succesfully created.";
+        showMessageBox(message);
+    }
+    else {
+        message = "Couldn't create file.";
+        showMessageBox(message);
+    }
 }
 
 void MainWindow::tableViewClicked() {
