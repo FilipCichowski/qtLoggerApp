@@ -38,7 +38,7 @@ void MainWindow::updateTableView() {
     model->setTable(databaseData.tableName);
     model->select();
     ui->tableView->setModel(model);
-    ui->tableView->hideColumn(0); // don't show the ID
+    //ui->tableView->hideColumn(0); // don't show the ID
     ui->tableView->show();
 }
 

@@ -24,6 +24,7 @@ private slots:
     void on_deleteEntry_clicked();
     void on_openQRZDatabase_clicked();
     void tableViewClicked();
+    void on_exportEntry_clicked();
 
 private:
     int activeRowIndex;

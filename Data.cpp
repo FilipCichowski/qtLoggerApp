@@ -252,6 +252,6 @@ extern const QStringList countryList = {
     "Åland Islands"
 };
 
-extern const DatabaseData databaseData("qso", "qso", "127.0.0.1", "root", "mynewpassword");
+extern const DatabaseData databaseData("qso", "qso", "127.0.0.1", "root", "dupa", 2137);
 
 

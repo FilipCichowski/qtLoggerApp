@@ -10,12 +10,14 @@ struct TableData {
 class DatabaseData {
     public:
         QString databaseName, tableName, hostName, userName, databasePassword;
-        DatabaseData(QString databaseName, QString tableName, QString hostName, QString userName, QString databasePassword)
+        int port;
+        DatabaseData(QString databaseName, QString tableName, QString hostName, QString userName, QString databasePassword, int port)
              : databaseName(databaseName),
                tableName(tableName),
                hostName(hostName),
                userName(userName),
-               databasePassword(databasePassword){};
+               databasePassword(databasePassword),
+               port(port){};
 };
 
 #endif // STRUCTURES_H

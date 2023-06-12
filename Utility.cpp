@@ -3,6 +3,7 @@
 bool Utility::isMySqlDatabaseConnected(const DatabaseData &databaseData) {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(databaseData.hostName);
+    db.setPort(databaseData.port);
     db.setDatabaseName(databaseData.databaseName);
     db.setUserName(databaseData.userName);
     db.setPassword(databaseData.databasePassword);
