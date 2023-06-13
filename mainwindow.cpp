@@ -38,7 +38,6 @@ void MainWindow::updateTableView() {
     model->setTable(databaseData.tableName);
     model->select();
     ui->tableView->setModel(model);
-    //ui->tableView->hideColumn(0); // don't show the ID
     ui->tableView->show();
 }
 
@@ -58,14 +57,13 @@ void MainWindow::updateActiveRow() {
     activeRowIndex = ui->tableView->selectionModel()->currentIndex().row();
     auto model = ui->tableView->model();
     activeRow = (TableData) {
-            .id = model->index(activeRowIndex, 0).data().toString(),
-            .call = model->index(activeRowIndex, 1).data().toString(),
-            .name = model->index(activeRowIndex, 2).data().toString(),
-            .country = model->index(activeRowIndex, 3).data().toString(),
-            .utc = model->index(activeRowIndex, 4).data().toString(),
-            .date = model->index(activeRowIndex, 5).data().toString(),
-            .frequency = model->index(activeRowIndex, 6).data().toString(),
-            .qslString = model->index(activeRowIndex, 7).data().toString()
+            .call = model->index(activeRowIndex, 0).data().toString(),
+            .name = model->index(activeRowIndex, 1).data().toString(),
+            .country = model->index(activeRowIndex, 2).data().toString(),
+            .utc = model->index(activeRowIndex, 3).data().toString(),
+            .date = model->index(activeRowIndex, 4).data().toString(),
+            .frequency = model->index(activeRowIndex, 5).data().toString(),
+            .qslString = model->index(activeRowIndex, 6).data().toString()
     };
 }
 
@@ -79,11 +77,6 @@ void MainWindow::on_addEntry_clicked() {
    addEntry();
 }
 
-void MainWindow::on_editEntry_clicked() {
-    Utility::updateRowByID(activeRow, databaseData.tableName);
-    updateTableView();
-}
-
 void MainWindow::on_deleteEntry_clicked() {
     Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
     updateTableView();
@@ -94,7 +87,7 @@ void MainWindow::on_exportEntry_clicked() {
     model->setTable(databaseData.tableName);
     model->select();
 
-    QString CSVString = "Id, Call sign, Name, Country, UTC, Date, Frequency, QSL\n";
+    QString CSVString = "Call sign, Name, Country, UTC, Date, Frequency, QSL\n";
 
     for (int i = 0; i < model->rowCount(); i++) {
         for (int j = 0; j < model->columnCount(); j++) {
@@ -143,10 +136,6 @@ void MainWindow::keyPressEvent(QKeyEvent* f_event) {
                 {
                     case Qt::Key_S:
                         addEntry();
-                        break;
-                    case Qt::Key_E:
-                        Utility::updateRowByID(activeRow, databaseData.tableName);
-                        updateTableView();
                         break;
                     case Qt::Key_D:
                     Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);

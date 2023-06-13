@@ -54,19 +54,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="editEntry">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Edit</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="3">
       <widget class="QPushButton" name="deleteEntry">
        <property name="maximumSize">
@@ -198,35 +185,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="4">
-      <widget class="QLabel" name="label_6">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Band</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="6">
-      <widget class="QComboBox" name="band"/>
-     </item>
-     <item row="2" column="6">
-      <widget class="QCheckBox" name="qsl">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>QSL?</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="4">
       <widget class="QPushButton" name="exportEntry">
        <property name="maximumSize">
@@ -237,6 +195,19 @@
        </property>
        <property name="text">
         <string>Export</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QCheckBox" name="qsl">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>QSL?</string>
        </property>
       </widget>
      </item>

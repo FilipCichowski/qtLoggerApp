@@ -19,7 +19,6 @@ protected:
     void timerEvent(QTimerEvent *event);
 
 private slots:
-    void on_editEntry_clicked();
     void on_addEntry_clicked();
     void on_deleteEntry_clicked();
     void on_openQRZDatabase_clicked();

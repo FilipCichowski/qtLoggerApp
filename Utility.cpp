@@ -28,12 +28,6 @@ bool Utility::deleteRowByUTCandDate(QString &utc, QString &date, QString const &
     return query.exec();
 };
 
-bool Utility::updateRowByID(TableData &data, QString const &tableName) {
-    QSqlQuery query;
-    query.prepare("UPDATE " + tableName + " SET Callsign=\"" + data.call + "\", Name=\"" + data.name + "\", Country=\"" + data.country + "\", UTC=\"" + data.utc + "\", Date=\"" + data.date + "\", Frequency=\"" + data.frequency + "\", QSL=\"" + data.qslString + "\" WHERE ID=\"" + data.id + "\"");
-    return query.exec();
-}
-
 QString Utility::validateUserInput(TableData &insertData) {
     QString message;
     bool isNameEmpty, isCallEmpty, isFreqEmpty, isNameTooLong, isCallTooLong, isFreqTooLong;

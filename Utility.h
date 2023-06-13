@@ -15,7 +15,6 @@ class Utility {
         static bool selectTable(QString const &tableName);
         static bool writeToDatabase(TableData &data, QString const &tableName);
         static bool deleteRowByUTCandDate(QString &utc, QString &date, QString const &tableName);
-        static bool updateRowByID(TableData &data, QString const &tableName);
         static QString validateUserInput(TableData &insertData);
 };
 #endif // UTILITY_H
