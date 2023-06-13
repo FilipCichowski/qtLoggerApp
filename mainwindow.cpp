@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QKeyEvent>
 #include <QFileDialog>
-#include "data.h"
 #include "./ui_mainwindow.h"
 #include "database.h"
 #include "mainwindow.h"
@@ -13,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    extern const QStringList countryList, bands;
-    extern const DatabaseData databaseData;
     startTimer(1000);
     ui->setupUi(this);
     initWidgets();

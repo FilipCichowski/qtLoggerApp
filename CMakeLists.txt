@@ -23,7 +23,6 @@ set(PROJECT_SOURCES
             mainwindow.ui
             database.h
             database.cpp
-            data.cpp
             data.h
             structures.h
 )
