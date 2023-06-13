@@ -22,7 +22,7 @@ bool Database::writeToDatabase(TableData &data, QString const &tableName) {
     return query.exec();
 };
 
-bool Database::deleteRowByUTCandDate(QString &utc, QString &date, QString const &tableName) {
+bool Database::deleteRowByUtcAndDate(QString &utc, QString &date, QString const &tableName) {
     QSqlQuery query;
     query.prepare("DELETE FROM " + tableName + " WHERE UTC=\"" + utc + "\" AND " + "Date=\"" + date + "\"");
     return query.exec();

@@ -75,7 +75,7 @@ void MainWindow::on_addEntry_clicked() {
 }
 
 void MainWindow::on_deleteEntry_clicked() {
-    Database::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+    Database::deleteRowByUtcAndDate(activeRow.utc, activeRow.date, databaseData.tableName);
     updateTableView();
 }
 
@@ -135,8 +135,8 @@ void MainWindow::keyPressEvent(QKeyEvent* f_event) {
                         addEntry();
                         break;
                     case Qt::Key_D:
-                    Database::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
-                    updateTableView();
+                        Database::deleteRowByUtcAndDate(activeRow.utc, activeRow.date, databaseData.tableName);
+                        updateTableView();
                         break;
                     case Qt::Key_F:
                         openQrz();
@@ -203,6 +203,4 @@ QString MainWindow::validateUserInput(TableData &insertData) {
 
     return message;
 };
-
-
 

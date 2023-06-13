@@ -14,6 +14,6 @@ class Database {
         static bool isMySqlDatabaseConnected(const DatabaseData &databaseData);
         static bool selectTable(QString const &tableName);
         static bool writeToDatabase(TableData &data, QString const &tableName);
-        static bool deleteRowByUTCandDate(QString &utc, QString &date, QString const &tableName);
+        static bool deleteRowByUtcAndDate(QString &utc, QString &date, QString const &tableName);
 };
 #endif
