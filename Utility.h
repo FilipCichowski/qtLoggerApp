@@ -6,7 +6,7 @@
 #include <QSqlDatabase>
 #include <QStringList>
 #include <QRegularExpression>
-#include <Structures.h>
+#include <structures.h>
 
 
 class Utility {

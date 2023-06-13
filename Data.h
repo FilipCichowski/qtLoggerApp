@@ -2,7 +2,7 @@
 #define DATA_H
 
 #include <QStringList>
-#include <Structures.h>
+#include <structures.h>
 
 extern const QStringList countryList;
 extern const QString tableName;

@@ -1,4 +1,4 @@
-#include "Utility.h"
+#include "utility.h"
 
 bool Utility::isMySqlDatabaseConnected(const DatabaseData &databaseData) {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");

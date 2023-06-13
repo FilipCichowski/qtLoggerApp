@@ -4,9 +4,9 @@
 #include <QDateTime>
 #include <QKeyEvent>
 #include <QFileDialog>
-#include "Data.h"
+#include "data.h"
 #include "./ui_mainwindow.h"
-#include "Utility.h"
+#include "utility.h"
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)

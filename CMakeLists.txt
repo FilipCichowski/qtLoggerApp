@@ -21,11 +21,11 @@ set(PROJECT_SOURCES
             mainwindow.cpp
             mainwindow.h
             mainwindow.ui
-            Utility.h
-            Utility.cpp
-            Data.cpp
-            Data.h
-            Structures.h
+            utility.h
+            utility.cpp
+            data.cpp
+            data.h
+            structures.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
