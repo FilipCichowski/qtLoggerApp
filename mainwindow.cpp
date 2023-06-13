@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include "data.h"
 #include "./ui_mainwindow.h"
-#include "utility.h"
+#include "database.h"
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     startTimer(1000);
     ui->setupUi(this);
     initWidgets();
-    Utility::selectTable(tableName);
+    Database::selectTable(tableName);
     updateTableView();
 }
 
@@ -78,7 +78,7 @@ void MainWindow::on_addEntry_clicked() {
 }
 
 void MainWindow::on_deleteEntry_clicked() {
-    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+    Database::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
     updateTableView();
 }
 
@@ -138,7 +138,7 @@ void MainWindow::keyPressEvent(QKeyEvent* f_event) {
                         addEntry();
                         break;
                     case Qt::Key_D:
-                    Utility::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
+                    Database::deleteRowByUTCandDate(activeRow.utc, activeRow.date, databaseData.tableName);
                     updateTableView();
                         break;
                     case Qt::Key_F:
@@ -166,16 +166,46 @@ void MainWindow::addEntry() {
             .frequency = ui->frequency->text(),
             .qslString = (qslState ? "YES" : "NO")};
 
-    QString validateMessage = Utility::validateUserInput(insertData);
+    QString validateMessage = validateUserInput(insertData);
 
     if(validateMessage.length() == 0) {
-        Utility::writeToDatabase(insertData, databaseData.tableName);
+        Database::writeToDatabase(insertData, databaseData.tableName);
         clearTextFields();
         updateTableView();
     } else {
         showMessageBox(validateMessage);
     }
 }
+
+QString MainWindow::validateUserInput(TableData &insertData) {
+    QString message;
+    bool isNameEmpty, isCallEmpty, isFreqEmpty, isNameTooLong, isCallTooLong, isFreqTooLong;
+    int nameLength, callLength, freqLength;
+    static QRegularExpression re("\\D"); // match anything but digit
+    nameLength = insertData.name.length();
+    callLength = insertData.call.length();
+    freqLength = insertData.frequency.length();
+    isNameEmpty = nameLength == 0;
+    isCallEmpty = callLength == 0;
+    isFreqEmpty = freqLength == 0;
+    isNameTooLong = nameLength > 15;
+    isCallTooLong = callLength > 15;
+    isFreqTooLong = freqLength > 15;
+
+    if(isCallEmpty or isNameEmpty or isFreqEmpty) {
+        message += "Please fill the blank fields!\n";
+    }
+
+    if(isNameTooLong or isCallTooLong or isFreqTooLong) {
+        message += "User input's length shouldn't exceed 15 characters.\n";
+    }
+
+    if (re.match(insertData.frequency).hasMatch()) {
+        message += "Frequency field should contain only numbers.\n";
+    }
+
+    return message;
+};
 
 
 

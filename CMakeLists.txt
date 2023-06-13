@@ -21,8 +21,8 @@ set(PROJECT_SOURCES
             mainwindow.cpp
             mainwindow.h
             mainwindow.ui
-            utility.h
-            utility.cpp
+            database.h
+            database.cpp
             data.cpp
             data.h
             structures.h

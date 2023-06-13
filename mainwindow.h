@@ -29,6 +29,7 @@ private:
     int activeRowIndex;
     Ui::MainWindow *ui;
     QString tableName;
+    QString validateUserInput(TableData &insertData);
     TableData activeRow;
     TableData insertData;
     void showMessageBox(QString &message);
@@ -41,6 +42,5 @@ private:
     void updateDateTime();
     void initWidgets();
     void keyPressEvent(QKeyEvent *e);
-
 };
 #endif // MAINWINDOW_H

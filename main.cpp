@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "utility.h"
+#include "database.h"
 #include "data.h"
 #include <QApplication>
 
@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    if(Utility::isMySqlDatabaseConnected(databaseData)) {
+    if(Database::isMySqlDatabaseConnected(databaseData)) {
         MainWindow w;
         w.show();
         return a.exec();
